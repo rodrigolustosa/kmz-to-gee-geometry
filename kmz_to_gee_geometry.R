@@ -17,6 +17,19 @@ dir_data <- "data"
 file_example <- "[SaoPaulo][01042023][RodrigoLustosa].kmz"
 
 
+# functions ---------------------------------------------------------------
+
+# pick up LCZ colors to be used
+lcz_cols <- function(lay_index){
+  all_lcz_cols <- 
+    c("#8c0000","#d10000","#ff0000","#bf4d00","#ff6600","#ff9955","#faee05",
+      "#bcbcbc","#ffccaa","#555555","#006a00","#00aa00","#648525","#b9db79",
+      "#000000","#fbf7ae","#6a6aff")
+  delta <- as.numeric(names(lay_index)[1]) - lay_index[1]
+  return(all_lcz_cols[lay_index + delta])
+}
+
+
 # read files --------------------------------------------------------------
 
 file_path <- file.path(dir_data, file_example)
@@ -63,6 +76,8 @@ for(lay in 1:n_layers){
 final_lines <- vector("character",n_lines)
 # colors for each geometry
 geom_colors <- rainbow(sum(n_features != 0))
+# lay_index   <- which(sapply(geometries, function(x) !is.null(x)))
+# geom_colors <- lcz_cols(lay_index)
 # start counters
 l <- 0 # lines
 k <- 0 # colors
